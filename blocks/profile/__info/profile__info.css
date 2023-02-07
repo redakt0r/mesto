@@ -1,0 +1,21 @@
+.profile__info {
+  display: grid;
+  grid-template-columns: 1fr 24px;
+  grid-template-areas:
+    "name edit"
+    "occupation occupation";
+  column-gap: 22px;
+  padding-left: 30px;
+  padding-right: 10px;
+  align-items: baseline;
+}
+
+@media screen and (max-width: 700px) {
+  .profile__info {
+    padding-left: 0;
+    padding-right: 0;
+    margin-bottom: 34px;
+    justify-items: center;
+    column-gap: 10px;
+  }
+}
