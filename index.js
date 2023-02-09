@@ -14,10 +14,19 @@ closePopup.addEventListener("click", function () {
 const nameInput = document.querySelector(".popup__name-field");
 const occupationInput = document.querySelector(".popup__occupation-field");
 
+const profileName = document.querySelector(".profile__name");
+const profileOccupation = document.querySelector(".profile__occupation");
+
+nameInput.value = profileName.textContent;
+occupationInput.value = profileOccupation.textContent;
+
+const formElement = document.querySelector(".popup__container");
+
 function handleFormSubmit(evt) {
   evt.preventDefault();
-  const profileName = document.querySelector(".profile__name");
-  const profileOccupation = document.querySelector(".profile__occupation");
-  nameInput.value = profileName.textContent;
-  occupationInput.value = profileOccupation.textContent;
+  profileName.textContent = nameInput.value;
+  profileOccupation.textContent = occupationInput.value;
+  editPopup.classList.remove("popup_opened");
 }
+
+formElement.addEventListener("submit", handleFormSubmit);
