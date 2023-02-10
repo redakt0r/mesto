@@ -22,12 +22,6 @@ const occupationInput = formElement.querySelector(
   ".popup__input_name_occupation"
 );
 
-/* const profileName = document.querySelector(".profile__name");
-const profileOccupation = document.querySelector(".profile__occupation"); */
-
-/* nameInput.value = profileName.textContent;
-occupationInput.value = profileOccupation.textContent; */
-
 function handleFormSubmit(evt) {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
