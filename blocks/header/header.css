@@ -1,11 +1,11 @@
-.main-header {
+.header {
   max-width: 880px;
   margin: 0 auto;
   padding: 45px 19px 38px;
 }
 
-@media screen and (max-width: 700px) {
-  .main-header {
+@media (max-width: 700px) {
+  .header {
     padding: 28px 27px 26px;
   }
 }

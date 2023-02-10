@@ -5,11 +5,16 @@
   margin: 0;
   grid-area: occupation;
   padding-top: 8px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 600px;
 }
 
-@media screen and (max-width: 700px) {
+@media (max-width: 700px) {
   .profile__occupation {
     font-size: 14px;
     line-height: 17px;
+    max-width: 282px;
   }
 }

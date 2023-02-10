@@ -2,9 +2,11 @@
   max-width: 120px;
   border-radius: 50%;
   display: block;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
 }
 
-@media screen and (max-width: 700px) {
+@media (max-width: 700px) {
   .profile__avatar {
     margin-bottom: 25px;
   }

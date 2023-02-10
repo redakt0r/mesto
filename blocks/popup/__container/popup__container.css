@@ -4,7 +4,7 @@
   justify-content: left;
   padding: 34px 36px 37px;
   width: 430px;
-  height: 330px;
+  min-height: 330px;
   color: #000;
   background-color: #fff;
   border-radius: 10px;
@@ -16,11 +16,11 @@
   box-sizing: border-box;
 }
 
-@media screen and (max-width: 700px) {
+@media (max-width: 700px) {
   .popup__container {
     width: 282px;
-    height: 322px;
-    padding: 25px 22px 25px;
+    min-height: 322px;
+    padding: 25px 21px 25px;
     transform: translate(-50%, -50%);
   }
 }
