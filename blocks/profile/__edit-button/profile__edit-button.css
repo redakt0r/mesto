@@ -3,7 +3,7 @@
   height: 24px;
   border: 1px solid #fff;
   background-color: #000;
-  background-image: url(../../../images/edit.png);
+  background-image: url(../../../images/edit.svg);
   grid-area: edit;
 }
 
