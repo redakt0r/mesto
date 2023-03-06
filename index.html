@@ -29,9 +29,9 @@
           aria-label="Добавить."
         ></button>
       </section>
-      <section class="elements" aria-label="Фотогалерея.">
-        <ul class="elements__list">
-          <li class="elements__item">
+      <section class="cards" aria-label="Фотогалерея.">
+        <ul class="cards__list">
+          <!-- <li class="elements__item">
             <article class="element">
               <img
                 src="./images/cathedral.jpg"
@@ -132,34 +132,90 @@
                 ></button>
               </div>
             </article>
-          </li>
+          </li> -->
         </ul>
       </section>
     </main>
     <footer class="footer">
       <p class="footer__copyright">&copy; 2023 Mesto Russia</p>
     </footer>
-    <div class="popup">
-      <form class="popup__container">
+    <div class="popup popup_aim_profile">
+      <div class="popup__container">
         <h2 class="popup__title">Редактировать профиль</h2>
-        <input class="popup__input popup__input_name_name" name="name" />
-        <input
-          class="popup__input popup__input_name_occupation"
-          name="occupation"
-        />
+        <form class="popup__form">
+          <input
+            class="popup__input popup__input_name_name"
+            name="name"
+            placeholder="Твое имя"
+          />
+          <input
+            class="popup__input popup__input_name_occupation"
+            name="occupation"
+            placeholder="какова твоя профессия"
+          />
+          <button
+            class="button popup__save-button popup__save-button_aim_profile"
+            type="submit"
+            aria-label="Сохранить."
+          >
+            Сохранить
+          </button>
+        </form>
         <button
-          class="button popup__save-button"
-          type="submit"
-          aria-label="Сохранить."
-        >
-          Сохранить
-        </button>
+          class="button popup__close-button popup__close-button_aim_profile"
+          type="button"
+          aria-label="Закрыть."
+        ></button>
+      </div>
+    </div>
+    <div class="popup popup_aim_cards">
+      <div class="popup__container">
+        <h2 class="popup__title">Новое место</h2>
+        <form class="popup__form">
+          <input
+            class="popup__input popup__input_name_place"
+            name="place"
+            placeholder="Название"
+          />
+          <input
+            class="popup__input popup__input_name_link"
+            name="link"
+            placeholder="Ссылка на картинку"
+          />
+          <button
+            class="button popup__save-button"
+            type="submit"
+            aria-label="Создать."
+          >
+            Создать
+          </button>
+        </form>
         <button
           class="button popup__close-button"
           type="button"
           aria-label="Закрыть."
         ></button>
-      </form>
+      </div>
     </div>
+    <template id="cardTemplate">
+      <li class="cards__item">
+        <article class="card">
+          <img src="#" alt="." class="card__image" />
+          <div class="card__wrapper">
+            <h2 class="card__title"></h2>
+            <button
+              class="button card__like-button"
+              type="button"
+              aria-label="Лайк."
+            ></button>
+            <button
+              class="button card__remove-button"
+              type="button"
+              aria-label="Удалить картинку"
+            ></button>
+          </div>
+        </article>
+      </li>
+    </template>
   </body>
 </html>

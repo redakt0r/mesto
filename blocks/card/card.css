@@ -1,6 +1,8 @@
-.element {
+.card {
+  position: relative;
   border-radius: 10px;
   background-color: #fff;
   color: #000;
   overflow: hidden;
+  max-width: 506px;
 }

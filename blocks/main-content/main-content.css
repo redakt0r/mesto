@@ -2,10 +2,17 @@
   max-width: 880px;
   margin: 0 auto;
   padding: 0 19px;
+  min-height: calc(100vh - 270px);
 }
 
 @media (max-width: 918px) {
   .main-content {
     border-top: 1px solid rgba(84, 84, 84, 0.6);
+  }
+}
+
+@media (max-width: 700px) {
+  .main-content {
+    min-height: calc(100vh - 211px);
   }
 }
