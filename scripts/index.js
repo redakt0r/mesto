@@ -61,7 +61,7 @@ function handleFormProfileSubmit(evt) {
 formProfile.addEventListener("submit", handleFormProfileSubmit);
 
 //переменные для добавления карточек
-const addCardButton = document.querySelector(".cards__add-button");
+const addCardButton = document.querySelector(".profile__card-button");
 
 //открытие попапа добавления карточек
 addCardButton.addEventListener("click", function () {
@@ -114,8 +114,8 @@ function handleLikeButtonClick(event) {
 }
 
 //картинка
-const fullSizePicture = picturePopup.querySelector(".picture");
-const pictureTitle = picturePopup.querySelector(".picture__title");
+const fullSizePicture = picturePopup.querySelector(".popup__picture");
+const pictureTitle = picturePopup.querySelector(".popup__caption");
 
 //функция создания карточки (клонирование темплейта с содержимым -> заполнение его полей ->
 // -> установка слушателей на кнопку удаления, лайк, открытие попапа картинки ->
