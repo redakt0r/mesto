@@ -8,14 +8,39 @@ const profilePopup = document.querySelector(".popup_aim_profile");
 const picturePopup = document.querySelector(".popup_aim_picture");
 const newCardPopup = document.querySelector(".popup_aim_cards");
 
+//закрытие попапа по Escape
+function closePopupEscape(evt) {
+  if (evt.key === "Escape") {
+    closePopup(document.querySelector(".popup_opened"));
+  }
+}
+
 //для открытия попапа
 function openPopup(popup) {
+  popup.addEventListener("click", function (evt) {
+    if (evt.target === popup) {
+      closePopup(popup);
+    }
+  });
+  document.addEventListener("keydown", closePopupEscape);
   popup.classList.add("popup_opened");
 }
 
 //для закрытия попапа
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
+  //скрытие активных ошибок
+  const activeErrorList = popup.querySelectorAll(".popup__input-error_active");
+  activeErrorList.forEach(function (activeError) {
+    activeError.classList.remove("popup__input-error_active");
+  });
+  //снятие класса невалидного инпута
+  const inputsList = popup.querySelectorAll(".popup__input_highlighted");
+  inputsList.forEach(function (input) {
+    input.classList.remove("popup__input_highlighted");
+  });
+  //удаление слушателя закрытия по Escape
+  document.removeEventListener("keydown", closePopupEscape);
 }
 
 //для открытие попапа редактирования профиля
@@ -39,9 +64,9 @@ popupCloseButtonsList.forEach(function (closeButton) {
 });
 
 //переменные для сохранения изменений профиля
-const formProfile = profilePopup.querySelector(".popup__form_aim_profile");
-const nameInput = formProfile.querySelector(".popup__input_name_name");
-const occupationInput = formProfile.querySelector(
+const profileForm = profilePopup.querySelector(".popup__form_aim_profile");
+const nameInput = profileForm.querySelector(".popup__input_name_name");
+const occupationInput = profileForm.querySelector(
   ".popup__input_name_occupation"
 );
 
@@ -54,7 +79,7 @@ function handleFormProfileSubmit(evt) {
 }
 
 //запуск функции сохранения по сабмиту
-formProfile.addEventListener("submit", handleFormProfileSubmit);
+profileForm.addEventListener("submit", handleFormProfileSubmit);
 
 //переменные для добавления карточек
 const newCardAddButton = document.querySelector(".profile__card-button");
@@ -75,11 +100,6 @@ const cardTemplate =
   document.querySelector("#cardTemplate").content.firstElementChild;
 
 //удаление карточки по нажатию на корзину
-/* function handleDeleteButtonClick(event) {
-  const button = event.target;
-  const card = button.closest(".cards__item");
-  card.remove();
-} */
 function handleDeleteButtonClick(card) {
   card.remove();
 }

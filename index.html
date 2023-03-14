@@ -7,6 +7,7 @@
     <title>Mesto</title>
     <script src="./scripts/initialCards.js"></script>
     <script src="./scripts/index.js" defer></script>
+    <script src="./scripts/validation.js" defer></script>
   </head>
   <body class="page">
     <header class="header">
@@ -45,16 +46,29 @@
             class="popup__input popup__input_name_name"
             name="name"
             placeholder="Твое имя"
+            type="text"
+            minlength="2"
+            maxlength="40"
+            required
           />
+          <span class="popup__input-error popup__input-error_type_name"></span>
           <input
             class="popup__input popup__input_name_occupation"
             name="occupation"
             placeholder="какова твоя профессия"
+            type="text"
+            minlength="2"
+            maxlength="200"
+            required
           />
+          <span
+            class="popup__input-error popup__input-error_type_occupation"
+          ></span>
           <button
-            class="button popup__save-button popup__save-button_aim_profile"
+            class="button popup__save-button popup__save-button_aim_profile popup__save-button_disabled"
             type="submit"
             aria-label="Сохранить."
+            disabled
           >
             Сохранить
           </button>
@@ -74,16 +88,25 @@
             class="popup__input popup__input_name_place"
             name="place"
             placeholder="Название"
+            type="text"
+            minlength="2"
+            maxlength="30"
+            required
           />
+          <span class="popup__input-error popup__input-error_type_place"></span>
           <input
             class="popup__input popup__input_name_link"
             name="link"
             placeholder="Ссылка на картинку"
+            type="url"
+            required
           />
+          <span class="popup__input-error popup__input-error_type_link"></span>
           <button
-            class="button popup__save-button"
+            class="button popup__save-button popup__close-button_aim_cards popup__save-button_disabled"
             type="submit"
             aria-label="Создать."
+            disabled
           >
             Создать
           </button>
