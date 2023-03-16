@@ -29,59 +29,56 @@ const checkInputValidity = (input, errorClassTemplate, errorClassActive) => {
 };
 
 //тумблер кнопки "сохранить"
-const toggleSubmitButton = (form) => {
-  const submitButton = form.querySelector(".popup__save-button");
+const toggleSubmitButton = (form, submitButton, inactiveButtonClass) => {
   if (form.checkValidity()) {
-    submitButton.classList.remove("popup__save-button_disabled");
+    submitButton.classList.remove(inactiveButtonClass);
     submitButton.disabled = false;
   } else {
-    submitButton.classList.add("popup__save-button_disabled");
+    submitButton.classList.add(inactiveButtonClass);
     submitButton.disabled = true;
   }
 };
 
-//установка слушателей ввода + отключение дефолтной отправки формы
+//установка слушателей ввода + тумблера кнопки "сохранить"
 const setEventListeners = (
   form,
-  inputList,
+  inputSelector,
+  submitButtonSelector,
+  inactiveButtonClass,
   errorClassTemplate,
   errorClassActive
 ) => {
-  form.addEventListener("submit", (evt) => {
-    evt.preventDefault();
-  });
-  inputList.forEach((input) => {
+  const inputsList = form.querySelectorAll(inputSelector);
+  const submitButton = form.querySelector(submitButtonSelector);
+  inputsList.forEach((input) => {
     input.addEventListener("input", () => {
       checkInputValidity(input, errorClassTemplate, errorClassActive);
-      toggleSubmitButton(form);
+      toggleSubmitButton(form, submitButton, inactiveButtonClass);
     });
   });
 };
 
 //валидация
-const enebleValidation = (config) => {
-  const form = document.querySelector(config.formSelector);
-  const inputList = form.querySelectorAll(config.inputListSelector);
-  setEventListeners(
-    form,
-    inputList,
-    config.errorClassTemplate,
-    config.errorClassActive
-  );
+const enableValidation = (config) => {
+  const formsList = document.querySelectorAll(config.formSelector);
+  formsList.forEach((form) => {
+    setEventListeners(
+      form,
+      config.inputSelector,
+      config.submitButtonSelector,
+      config.inactiveButtonClass,
+      config.errorClassTemplate,
+      config.errorClassActive
+    );
+  });
 };
 
-//валидация профиля
-enebleValidation({
-  formSelector: ".popup__form_aim_profile",
-  inputListSelector: ".popup__input",
-  errorClassTemplate: ".popup__input-error_type_",
-  errorClassActive: "popup__input-error_active",
-});
-
-//валидация новой карточки
-enebleValidation({
-  formSelector: ".popup__form_aim_cards",
-  inputListSelector: ".popup__input",
+//запуск валидации
+enableValidation({
+  formSelector: ".popup__form",
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__save-button",
+  inactiveButtonClass: "popup__save-button_disabled",
   errorClassTemplate: ".popup__input-error_type_",
   errorClassActive: "popup__input-error_active",
 });
