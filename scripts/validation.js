@@ -21,10 +21,8 @@ const checkInputValidity = (input, errorClassTemplate, errorClassActive) => {
   );
   if (!input.validity.valid) {
     showInputError(errorTextElement, input.validationMessage, errorClassActive);
-    input.classList.add("popup__input_highlighted");
   } else {
     hideInputError(errorTextElement, errorClassActive);
-    input.classList.remove("popup__input_highlighted");
   }
 };
 

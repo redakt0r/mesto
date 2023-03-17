@@ -30,12 +30,6 @@ function openPopup(popup) {
 //для закрытия попапа + сброс полей + сброс подсветки инпутов
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
-  newCardForm.reset();
-  //снятие класса невалидного инпута
-  const inputsList = popup.querySelectorAll(".popup__input_highlighted");
-  inputsList.forEach(function (input) {
-    input.classList.remove("popup__input_highlighted");
-  });
   //удаление слушателя закрытия по Escape
   document.removeEventListener("keydown", closePopupEscape);
 }
@@ -89,6 +83,7 @@ const newCardAddButton = document.querySelector(".profile__card-button");
 
 //для открытия попапа добавления карточек
 function openNewCardPopup() {
+  newCardForm.reset();
   newCardSaveButton.classList.add("popup__save-button_disabled");
   newCardSaveButton.disabled = true;
   openPopup(newCardPopup);
