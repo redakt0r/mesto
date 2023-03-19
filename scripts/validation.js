@@ -15,14 +15,21 @@ const hideInputError = (errorTextElement, errorClassActive) => {
 };
 
 //проверка валидности ввода
-const checkInputValidity = (input, errorClassTemplate, errorClassActive) => {
+const checkInputValidity = (
+  input,
+  errorClassTemplate,
+  errorClassActive,
+  inputHighlightedClass
+) => {
   const errorTextElement = document.querySelector(
     `${errorClassTemplate}${input.name}`
   );
   if (!input.validity.valid) {
     showInputError(errorTextElement, input.validationMessage, errorClassActive);
+    input.classList.add(inputHighlightedClass);
   } else {
     hideInputError(errorTextElement, errorClassActive);
+    input.classList.remove(inputHighlightedClass);
   }
 };
 
@@ -44,13 +51,19 @@ const setEventListeners = (
   submitButtonSelector,
   inactiveButtonClass,
   errorClassTemplate,
-  errorClassActive
+  errorClassActive,
+  inputHighlightedClass
 ) => {
   const inputsList = form.querySelectorAll(inputSelector);
   const submitButton = form.querySelector(submitButtonSelector);
   inputsList.forEach((input) => {
     input.addEventListener("input", () => {
-      checkInputValidity(input, errorClassTemplate, errorClassActive);
+      checkInputValidity(
+        input,
+        errorClassTemplate,
+        errorClassActive,
+        inputHighlightedClass
+      );
       toggleSubmitButton(form, submitButton, inactiveButtonClass);
     });
   });
@@ -66,7 +79,8 @@ const enableValidation = (config) => {
       config.submitButtonSelector,
       config.inactiveButtonClass,
       config.errorClassTemplate,
-      config.errorClassActive
+      config.errorClassActive,
+      config.inputHighlightedClass
     );
   });
 };
@@ -79,4 +93,5 @@ enableValidation({
   inactiveButtonClass: "popup__save-button_disabled",
   errorClassTemplate: ".popup__input-error_type_",
   errorClassActive: "popup__input-error_active",
+  inputHighlightedClass: "popup__input_highlighted",
 });
