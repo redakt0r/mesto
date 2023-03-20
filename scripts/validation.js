@@ -1,17 +1,26 @@
 //отображение ошибки валидации
 const showInputError = (
+  input,
   errorTextElement,
   validationMessage,
-  errorClassActive
+  errorClassActive,
+  inputHighlightedClass
 ) => {
   errorTextElement.textContent = validationMessage;
   errorTextElement.classList.add(errorClassActive);
+  input.classList.add(inputHighlightedClass);
 };
 
 //скрытие сообщения ошибки валидации
-const hideInputError = (errorTextElement, errorClassActive) => {
+const hideInputError = (
+  input,
+  errorTextElement,
+  errorClassActive,
+  inputHighlightedClass
+) => {
   errorTextElement.classList.remove(errorClassActive);
   errorTextElement.textContent = "";
+  input.classList.remove(inputHighlightedClass);
 };
 
 //проверка валидности ввода
@@ -25,11 +34,20 @@ const checkInputValidity = (
     `${errorClassTemplate}${input.name}`
   );
   if (!input.validity.valid) {
-    showInputError(errorTextElement, input.validationMessage, errorClassActive);
-    input.classList.add(inputHighlightedClass);
+    showInputError(
+      input,
+      errorTextElement,
+      input.validationMessage,
+      errorClassActive,
+      inputHighlightedClass
+    );
   } else {
-    hideInputError(errorTextElement, errorClassActive);
-    input.classList.remove(inputHighlightedClass);
+    hideInputError(
+      input,
+      errorTextElement,
+      errorClassActive,
+      inputHighlightedClass
+    );
   }
 };
 
