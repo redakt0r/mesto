@@ -1,3 +1,7 @@
+import initialCards from "./initialCards.js";
+import Card from "./Card.js";
+import FormValidator from "./FormValidator.js";
+
 //переменные для редактирования профиля
 const editProfileButton = document.querySelector(".profile__edit-button");
 const profileName = document.querySelector(".profile__name");
@@ -27,7 +31,7 @@ function openPopup(popup) {
   popup.classList.add("popup_opened");
 }
 
-//для закрытия попапа + сброс полей + сброс подсветки инпутов
+//для закрытия попапа
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
   //удаление слушателя закрытия по Escape
@@ -94,18 +98,6 @@ newCardAddButton.addEventListener("click", openNewCardPopup);
 
 //переменные для добавления карточек
 const elementsContainer = document.querySelector(".cards__list");
-const cardTemplate =
-  document.querySelector("#cardTemplate").content.firstElementChild;
-
-//удаление карточки по нажатию на корзину
-function handleDeleteButtonClick(card) {
-  card.remove();
-}
-
-//тумблер для лайка
-function handleLikeButtonClick(button) {
-  button.classList.toggle("card__like-button_active");
-}
 
 //картинка
 const fullSizePicture = picturePopup.querySelector(".popup__picture");
@@ -119,52 +111,58 @@ function openPicturePopup(link, name) {
   openPopup(picturePopup);
 }
 
-//функция создания карточки (клонирование темплейта с содержимым -> заполнение его полей ->
-// -> установка слушателей на кнопки удаления, лайк, открытие попапа картинки ->
-function createCard(card) {
-  const newCard = cardTemplate.cloneNode(true);
-  const cardTitle = newCard.querySelector(".card__title");
-  cardTitle.textContent = card.name;
-  const cardImage = newCard.querySelector(".card__image");
-  cardImage.setAttribute("src", card.link);
-  cardImage.setAttribute("alt", card.name);
-  const deleteButton = newCard.querySelector(".card__remove-button");
-  deleteButton.addEventListener("click", function () {
-    handleDeleteButtonClick(newCard);
-  });
-  const likeButton = newCard.querySelector(".card__like-button");
-  likeButton.addEventListener("click", function () {
-    handleLikeButtonClick(likeButton);
-  });
-  const picture = newCard.querySelector(".card__image");
-  picture.addEventListener("click", function () {
-    openPicturePopup(card.link, card.name);
-  });
-  return newCard;
-}
-
 //функция добавления карточки в разметку
 function renderCard(container, element) {
   container.prepend(element);
 }
-
-//добавление дефолтных карточек при загрузке
-initialCards.forEach(function (card) {
-  renderCard(elementsContainer, createCard(card));
-});
 
 //добавление новой карточки
 function handleFormCardSubmit(evt) {
   evt.preventDefault();
   const name = placeInput.value;
   const link = linkInput.value;
-  const card = {
+  const cardData = {
     name: name,
     link: link,
   };
-  renderCard(elementsContainer, createCard(card));
+  const card = new Card(cardData, "#cardTemplate", openPicturePopup);
+  const cardElement = card.generateCard();
+  renderCard(elementsContainer, cardElement);
   closePopup(newCardPopup);
 }
 
 //запуск добавления карточки по сабмиту
 newCardForm.addEventListener("submit", handleFormCardSubmit);
+
+//создание и отрисовка дефолтных карточек
+initialCards.forEach((item) => {
+  const card = new Card(item, "#cardTemplate", openPicturePopup);
+  const cardElement = card.generateCard();
+  renderCard(elementsContainer, cardElement);
+});
+
+//настройки для валидации
+const validationConfig = {
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__save-button",
+  inactiveButtonClass: "popup__save-button_disabled",
+  errorClassTemplate: ".popup__input-error_type_",
+  errorClassActive: "popup__input-error_active",
+  inputHighlightedClass: "popup__input_highlighted",
+};
+
+//инстанс формы новой карточки
+const formValidatorCard = new FormValidator(
+  ".popup__form_aim_cards",
+  validationConfig
+);
+
+//инстанс формы редактирования профиля
+const formValidatorProfile = new FormValidator(
+  ".popup__form_aim_profile",
+  validationConfig
+);
+
+//запуск валидации форм
+formValidatorCard.enableValidation();
+formValidatorProfile.enableValidation();
