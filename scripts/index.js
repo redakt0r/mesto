@@ -1,11 +1,6 @@
-import initialCards from "./initialCards.js";
+import { initialCards, validationConfig } from "./constants.js";
 import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
-
-//переменные для редактирования профиля
-const editProfileButton = document.querySelector(".profile__edit-button");
-const profileName = document.querySelector(".profile__name");
-const profileOccupation = document.querySelector(".profile__occupation");
 
 //попапы
 const profilePopup = document.querySelector(".popup_aim_profile");
@@ -16,7 +11,28 @@ const newCardPopup = document.querySelector(".popup_aim_cards");
 const newCardForm = newCardPopup.querySelector(".popup__form_aim_cards");
 const placeInput = newCardForm.querySelector(".popup__input_name_place");
 const linkInput = newCardForm.querySelector(".popup__input_name_link");
-const newCardSaveButton = newCardForm.querySelector(".popup__save-button");
+
+//переменные для сохранения изменений профиля
+const profileForm = profilePopup.querySelector(".popup__form_aim_profile");
+const nameInput = profileForm.querySelector(".popup__input_name_name");
+const occupationInput = profileForm.querySelector(
+  ".popup__input_name_occupation"
+);
+
+//инстанс формы новой карточки
+const formValidatorCard = new FormValidator(newCardForm, validationConfig);
+
+//инстанс формы редактирования профиля
+const formValidatorProfile = new FormValidator(profileForm, validationConfig);
+
+//запуск валидации форм
+formValidatorCard.enableValidation();
+formValidatorProfile.enableValidation();
+
+//переменные для редактирования профиля
+const editProfileButton = document.querySelector(".profile__edit-button");
+const profileName = document.querySelector(".profile__name");
+const profileOccupation = document.querySelector(".profile__occupation");
 
 //закрытие попапа по Escape
 function closePopupEscape(evt) {
@@ -42,6 +58,7 @@ function closePopup(popup) {
 function openProfilePopup() {
   nameInput.value = profileName.textContent;
   occupationInput.value = profileOccupation.textContent;
+  formValidatorProfile.clearInputErrors();
   openPopup(profilePopup);
 }
 
@@ -64,13 +81,6 @@ popupCloseButtonsList.forEach(function (closeButton) {
   });
 });
 
-//переменные для сохранения изменений профиля
-const profileForm = profilePopup.querySelector(".popup__form_aim_profile");
-const nameInput = profileForm.querySelector(".popup__input_name_name");
-const occupationInput = profileForm.querySelector(
-  ".popup__input_name_occupation"
-);
-
 //функция сохранения изменений профиля
 function handleFormProfileSubmit(evt) {
   evt.preventDefault();
@@ -84,20 +94,18 @@ profileForm.addEventListener("submit", handleFormProfileSubmit);
 
 //переменные для добавления карточек
 const newCardAddButton = document.querySelector(".profile__card-button");
+const elementsContainer = document.querySelector(".cards__list");
 
 //для открытия попапа добавления карточек
 function openNewCardPopup() {
   newCardForm.reset();
-  newCardSaveButton.classList.add("popup__save-button_disabled");
-  newCardSaveButton.disabled = true;
+  formValidatorCard.toggleSubmitButton();
+  formValidatorCard.clearInputErrors();
   openPopup(newCardPopup);
 }
 
 //открытие попапа добавления карточек
 newCardAddButton.addEventListener("click", openNewCardPopup);
-
-//переменные для добавления карточек
-const elementsContainer = document.querySelector(".cards__list");
 
 //картинка
 const fullSizePicture = picturePopup.querySelector(".popup__picture");
@@ -116,18 +124,17 @@ function renderCard(container, element) {
   container.prepend(element);
 }
 
+//инстанс карточки и ее создание
+function renderInstanceCard(name, link) {
+  const instanceCard = new Card(name, link, "#cardTemplate", openPicturePopup);
+  const cardElement = instanceCard.generateCard();
+  renderCard(elementsContainer, cardElement);
+}
+
 //добавление новой карточки
 function handleFormCardSubmit(evt) {
   evt.preventDefault();
-  const name = placeInput.value;
-  const link = linkInput.value;
-  const cardData = {
-    name: name,
-    link: link,
-  };
-  const card = new Card(cardData, "#cardTemplate", openPicturePopup);
-  const cardElement = card.generateCard();
-  renderCard(elementsContainer, cardElement);
+  renderInstanceCard(placeInput.value, linkInput.value);
   closePopup(newCardPopup);
 }
 
@@ -136,33 +143,5 @@ newCardForm.addEventListener("submit", handleFormCardSubmit);
 
 //создание и отрисовка дефолтных карточек
 initialCards.forEach((item) => {
-  const card = new Card(item, "#cardTemplate", openPicturePopup);
-  const cardElement = card.generateCard();
-  renderCard(elementsContainer, cardElement);
+  renderInstanceCard(item.name, item.link);
 });
-
-//настройки для валидации
-const validationConfig = {
-  inputSelector: ".popup__input",
-  submitButtonSelector: ".popup__save-button",
-  inactiveButtonClass: "popup__save-button_disabled",
-  errorClassTemplate: ".popup__input-error_type_",
-  errorClassActive: "popup__input-error_active",
-  inputHighlightedClass: "popup__input_highlighted",
-};
-
-//инстанс формы новой карточки
-const formValidatorCard = new FormValidator(
-  ".popup__form_aim_cards",
-  validationConfig
-);
-
-//инстанс формы редактирования профиля
-const formValidatorProfile = new FormValidator(
-  ".popup__form_aim_profile",
-  validationConfig
-);
-
-//запуск валидации форм
-formValidatorCard.enableValidation();
-formValidatorProfile.enableValidation();

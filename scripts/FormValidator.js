@@ -1,6 +1,6 @@
 export default class FormValidator {
-  constructor(formSelector, config) {
-    this._form = document.querySelector(formSelector);
+  constructor(form, config) {
+    this._form = form;
     this._inputsList = this._form.querySelectorAll(config.inputSelector);
     this._submitButton = this._form.querySelector(config.submitButtonSelector);
     this._inactiveButtonClass = config.inactiveButtonClass;
@@ -10,92 +10,64 @@ export default class FormValidator {
   }
 
   //отображение ошибки валидации
-  _showInputError(
-    input,
-    errorTextElement,
-    validationMessage,
-    errorClassActive,
-    inputHighlightedClass
-  ) {
-    errorTextElement.textContent = validationMessage;
-    errorTextElement.classList.add(errorClassActive);
-    input.classList.add(inputHighlightedClass);
+  _showInputError(input, errorTextElement) {
+    errorTextElement.textContent = input.validationMessage;
+    errorTextElement.classList.add(this._errorClassActive);
+    input.classList.add(this._inputHighlightedClass);
   }
 
   //скрытие сообщения ошибки валидации
-  _hideInputError(
-    input,
-    errorTextElement,
-    errorClassActive,
-    inputHighlightedClass
-  ) {
-    errorTextElement.classList.remove(errorClassActive);
+  _hideInputError(input, errorTextElement) {
+    errorTextElement.classList.remove(this._errorClassActive);
     errorTextElement.textContent = "";
-    input.classList.remove(inputHighlightedClass);
+    input.classList.remove(this._inputHighlightedClass);
   }
 
   //переключатель состояния кнопки сабмита
-  _toggleSubmitButton(form, submitButton, inactiveButtonClass) {
-    if (form.checkValidity()) {
-      submitButton.classList.remove(inactiveButtonClass);
-      submitButton.disabled = false;
+  toggleSubmitButton() {
+    if (this._form.checkValidity()) {
+      this._submitButton.classList.remove(this._inactiveButtonClass);
+      this._submitButton.disabled = false;
     } else {
-      submitButton.classList.add(inactiveButtonClass);
-      submitButton.disabled = true;
+      this._submitButton.classList.add(this._inactiveButtonClass);
+      this._submitButton.disabled = true;
     }
   }
 
   //проверка валидности ввода
-  _checkInputValidity(
-    input,
-    errorClassTemplate,
-    errorClassActive,
-    inputHighlightedClass,
-    form
-  ) {
-    this._errorTextElement = form.querySelector(
-      `${errorClassTemplate}${input.name}`
+  _checkInputValidity(input) {
+    this._errorTextElement = this._form.querySelector(
+      `${this._errorClassTemplate}${input.name}`
     );
     if (!input.validity.valid) {
-      this._showInputError(
-        input,
-        this._errorTextElement,
-        input.validationMessage,
-        errorClassActive,
-        inputHighlightedClass
-      );
+      this._showInputError(input, this._errorTextElement);
     } else {
-      this._hideInputError(
-        input,
-        this._errorTextElement,
-        errorClassActive,
-        inputHighlightedClass
-      );
+      this._hideInputError(input, this._errorTextElement);
     }
   }
 
   //установка слушателей проверки валидности и состояния кнопки сабмита
-  _setEventListeners(inputsList) {
-    inputsList.forEach((input) => {
+  _setEventListeners() {
+    this._inputsList.forEach((input) => {
       input.addEventListener("input", () => {
-        this._checkInputValidity(
-          input,
-          this._errorClassTemplate,
-          this._errorClassActive,
-          this._inputHighlightedClass,
-          this._form
-        );
-        this._toggleSubmitButton(
-          this._form,
-          this._submitButton,
-          this._inactiveButtonClass
-        );
+        this._checkInputValidity(input);
+        this.toggleSubmitButton();
       });
     });
   }
 
   //запуск валидации
   enableValidation() {
-    this._setEventListeners(this._inputsList);
+    this._setEventListeners();
+  }
+
+  //сброс активных ошибок
+  clearInputErrors() {
+    this._inputsList.forEach((input) => {
+      this._errorTextElement = this._form.querySelector(
+        `${this._errorClassTemplate}${input.name}`
+      );
+      this._hideInputError(input, this._errorTextElement);
+    });
   }
 }

@@ -26,4 +26,14 @@ const initialCards = [
   },
 ];
 
-export default initialCards;
+//настройки для валидации
+const validationConfig = {
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__save-button",
+  inactiveButtonClass: "popup__save-button_disabled",
+  errorClassTemplate: ".popup__input-error_type_",
+  errorClassActive: "popup__input-error_active",
+  inputHighlightedClass: "popup__input_highlighted",
+};
+
+export { initialCards, validationConfig };
