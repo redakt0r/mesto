@@ -1,27 +1,27 @@
 //массив дефолтных карточек
 const initialCards = [
   {
-    name: "Архыз",
+    place: "Архыз",
     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
   },
   {
-    name: "Челябинская область",
+    place: "Челябинская область",
     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
   },
   {
-    name: "Иваново",
+    place: "Иваново",
     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
   },
   {
-    name: "Камчатка",
+    place: "Камчатка",
     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
   },
   {
-    name: "Холмогорский район",
+    place: "Холмогорский район",
     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
   },
   {
-    name: "Байкал",
+    place: "Байкал",
     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
   },
 ];
@@ -36,4 +36,27 @@ const validationConfig = {
   inputHighlightedClass: "popup__input_highlighted",
 };
 
-export { initialCards, validationConfig };
+//кнопка добавления новой карточки
+const newCardAddButton = document.querySelector(".profile__card-button");
+
+//формы для включения валидации
+const newCardForm = document.querySelector(".popup__form_aim_cards");
+const profileForm = document.querySelector(".popup__form_aim_profile");
+
+//кнопка для редактирования профиля
+const editProfileButton = document.querySelector(".profile__edit-button");
+
+//инпуты формы реадактирования профиля
+const inputName = profileForm.elements.name;
+const inputOccupation = profileForm.elements.occupation;
+
+export {
+  initialCards,
+  validationConfig,
+  newCardAddButton,
+  newCardForm,
+  profileForm,
+  editProfileButton,
+  inputName,
+  inputOccupation,
+};
