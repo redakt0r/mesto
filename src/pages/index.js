@@ -4,12 +4,8 @@ import {
   initialCards,
   validationConfig,
   newCardAddButton,
-  newCardForm,
-  profileForm,
   editProfileButton,
-  inputName,
-  inputOccupation,
-} from "../components/constants.js";
+} from "../utils/constants.js";
 
 import Section from "../components/Section";
 import Card from "../components/Card.js";
@@ -36,9 +32,7 @@ const renderInstanceCard = (item) => {
 const cardList = new Section(
   {
     items: initialCards,
-    renderer: (item) => {
-      return renderInstanceCard(item);
-    },
+    renderer: renderInstanceCard,
   },
   ".cards__list"
 );
@@ -54,38 +48,43 @@ const addCardPopup = new PopupWithForm(".popup_aim_cards", (item) => {
 //установка слушателей на попап добавления карточек
 addCardPopup.setEventListeners();
 
+//уиверсальный объект инстансов валидации
+const formValidators = {};
+
+//для включении валидации форм и записи в уиверсальный объект инстансов валидации
+const enableValidation = (config) => {
+  const formsList = Array.from(document.forms);
+  formsList.forEach((form) => {
+    const validator = new FormValidator(form, config);
+    const formName = form.getAttribute("name");
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+};
+
+enableValidation(validationConfig);
+
 //открытие попапа добавления новой карточки и сброс полей фомры
 newCardAddButton.addEventListener("click", () => {
-  formValidatorCard.toggleSubmitButton();
-  formValidatorCard.clearInputErrors();
+  formValidators.cards.toggleSubmitButton();
+  formValidators.cards.clearInputErrors();
   addCardPopup.open();
 });
-
-//инстанс формы новой карточки
-const formValidatorCard = new FormValidator(newCardForm, validationConfig);
-
-//инстанс формы редактирования профиля
-const formValidatorProfile = new FormValidator(profileForm, validationConfig);
-
-//запуск валидации форм
-formValidatorCard.enableValidation();
-formValidatorProfile.enableValidation();
 
 //инстанс информации профиля
 const profileInfo = new UserInfo(".profile__name", ".profile__occupation");
 
 //инстанс попапа добавления карточки
-const editProfilePopup = new PopupWithForm(".popup_aim_profile", () => {
-  profileInfo.setUserInfo(editProfilePopup.getInputValues());
+const editProfilePopup = new PopupWithForm(".popup_aim_profile", (data) => {
+  profileInfo.setUserInfo(data);
 });
 
 editProfilePopup.setEventListeners();
 
 //открытие попапа редактирования профиля
 editProfileButton.addEventListener("click", () => {
-  formValidatorProfile.toggleSubmitButton();
-  formValidatorProfile.clearInputErrors();
-  inputName.value = profileInfo.getUserInfo().name;
-  inputOccupation.value = profileInfo.getUserInfo().occupation;
+  formValidators.profile.toggleSubmitButton();
+  formValidators.profile.clearInputErrors();
+  editProfilePopup.setInputValues(profileInfo.getUserInfo());
   editProfilePopup.open();
 });

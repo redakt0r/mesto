@@ -39,24 +39,7 @@ const validationConfig = {
 //кнопка добавления новой карточки
 const newCardAddButton = document.querySelector(".profile__card-button");
 
-//формы для включения валидации
-const newCardForm = document.querySelector(".popup__form_aim_cards");
-const profileForm = document.querySelector(".popup__form_aim_profile");
-
 //кнопка для редактирования профиля
 const editProfileButton = document.querySelector(".profile__edit-button");
 
-//инпуты формы реадактирования профиля
-const inputName = profileForm.elements.name;
-const inputOccupation = profileForm.elements.occupation;
-
-export {
-  initialCards,
-  validationConfig,
-  newCardAddButton,
-  newCardForm,
-  profileForm,
-  editProfileButton,
-  inputName,
-  inputOccupation,
-};
+export { initialCards, validationConfig, newCardAddButton, editProfileButton };
