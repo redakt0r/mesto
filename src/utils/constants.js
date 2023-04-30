@@ -42,4 +42,17 @@ const newCardAddButton = document.querySelector(".profile__card-button");
 //кнопка для редактирования профиля
 const editProfileButton = document.querySelector(".profile__edit-button");
 
-export { initialCards, validationConfig, newCardAddButton, editProfileButton };
+//селекторы элементов с информацией о пользователе
+const userData = {
+  userNameSelector: ".profile__name",
+  userOccupationSelector: ".profile__occupation",
+  userAvatarSelector: ".profile__avatar",
+};
+
+export {
+  initialCards,
+  validationConfig,
+  newCardAddButton,
+  editProfileButton,
+  userData,
+};

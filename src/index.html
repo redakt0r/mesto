@@ -23,13 +23,13 @@
           class="profile__avatar"
         />
         <div class="profile__info">
-          <h1 class="profile__name">Жак-Ив Кусто</h1>
+          <h1 class="profile__name"></h1>
           <button
             class="button profile__edit-button"
             type="button"
             aria-label="Редактировать."
           ></button>
-          <p class="profile__occupation">Исследователь океана</p>
+          <p class="profile__occupation"></p>
         </div>
         <button
           class="button profile__card-button"
@@ -63,17 +63,15 @@
           />
           <span class="popup__input-error popup__input-error_type_name"></span>
           <input
-            class="popup__input popup__input_name_occupation"
-            name="occupation"
+            class="popup__input popup__input_name_about"
+            name="about"
             placeholder="Какова твоя профессия"
             type="text"
             minlength="2"
             maxlength="200"
             required
           />
-          <span
-            class="popup__input-error popup__input-error_type_occupation"
-          ></span>
+          <span class="popup__input-error popup__input-error_type_about"></span>
           <button
             class="button popup__save-button popup__save-button_aim_profile popup__save-button_disabled"
             type="submit"
