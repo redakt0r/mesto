@@ -1,31 +1,3 @@
-//массив дефолтных карточек
-const initialCards = [
-  {
-    place: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-  },
-  {
-    place: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    place: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    place: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    place: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    place: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
-];
-
 //настройки для валидации
 const validationConfig = {
   inputSelector: ".popup__input",
@@ -39,8 +11,13 @@ const validationConfig = {
 //кнопка добавления новой карточки
 const newCardAddButton = document.querySelector(".profile__card-button");
 
-//кнопка для редактирования профиля
-const editProfileButton = document.querySelector(".profile__edit-button");
+//кнопки для редактирования профиля
+const editProfileButton = document.querySelector(
+  ".profile__edit-button_aim_info"
+);
+const editAvatarButton = document.querySelector(
+  ".profile__edit-button_aim_avatar"
+);
 
 //селекторы элементов с информацией о пользователе
 const userData = {
@@ -50,9 +27,9 @@ const userData = {
 };
 
 export {
-  initialCards,
   validationConfig,
   newCardAddButton,
   editProfileButton,
   userData,
+  editAvatarButton,
 };

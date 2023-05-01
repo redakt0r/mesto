@@ -1,7 +1,8 @@
 export default class Card {
-  constructor({ place, link }, templateSelector, openPopupFunction) {
-    this._place = place;
+  constructor({ name, link, likes }, templateSelector, openPopupFunction) {
+    this._place = name;
     this._link = link;
+    this._likes = likes.length;
     this._templateSelector = templateSelector;
     this._openPopupFunction = openPopupFunction;
   }
@@ -39,6 +40,10 @@ export default class Card {
     this._image.src = this._link;
     this._image.alt = this._place;
     this._title = this._element.querySelector(".card__title");
+    this._likesQuantity = this._element.querySelector(".card__like-counter");
+    if (this._likes > 0) {
+      this._likesQuantity.textContent = this._likes;
+    } else this._likesQuantity.textContent = "";
     this._title.textContent = this._place;
     this._cardLikeButton = this._element.querySelector(".card__like-button");
     this._deleteCardButton = this._element.querySelector(

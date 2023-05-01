@@ -17,15 +17,16 @@
     </header>
     <main class="main-content">
       <section class="profile">
-        <img
-          src="<%=require('./images/avatar.jpg')%>"
-          alt="Аватар."
-          class="profile__avatar"
-        />
+        <button
+          class="button profile__edit-button profile__edit-button_aim_avatar"
+        >
+          <img src="" alt="Аватар." class="profile__avatar" />
+        </button>
+
         <div class="profile__info">
           <h1 class="profile__name"></h1>
           <button
-            class="button profile__edit-button"
+            class="button profile__edit-button profile__edit-button_aim_info"
             type="button"
             aria-label="Редактировать."
           ></button>
@@ -137,17 +138,54 @@
         ></button>
       </div>
     </div>
+    <div class="popup popup_aim_avatar">
+      <div class="popup__container">
+        <h2 class="popup__title">Обновить аватар</h2>
+        <form
+          class="popup__form popup__form_aim_avatar"
+          name="avatar"
+          novalidate
+        >
+          <input
+            class="popup__input popup__input_name_avatar"
+            name="avatar"
+            placeholder="Ссылка на картинку"
+            type="url"
+            required
+          />
+          <span
+            class="popup__input-error popup__input-error_type_avatar"
+          ></span>
+          <button
+            class="button popup__save-button popup__save-button_aim_avatar popup__save-button_disabled"
+            type="submit"
+            aria-label="Сохранить."
+            disabled
+          >
+            Сохранить
+          </button>
+        </form>
+        <button
+          class="button popup__close-button popup__close-button_aim_avatar"
+          type="button"
+          aria-label="Закрыть."
+        ></button>
+      </div>
+    </div>
     <template id="cardTemplate">
       <li class="cards__item">
         <article class="card">
           <img src="#" alt="." class="card__image" />
           <div class="card__wrapper">
             <h2 class="card__title"></h2>
-            <button
-              class="button card__like-button"
-              type="button"
-              aria-label="Лайк."
-            ></button>
+            <div class="card__like-wrapper">
+              <button
+                class="button card__like-button"
+                type="button"
+                aria-label="Лайк."
+              ></button>
+              <p class="card__like-counter">1</p>
+            </div>
             <button
               class="button card__remove-button"
               type="button"

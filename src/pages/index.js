@@ -1,10 +1,10 @@
 import "./index.css";
 
 import {
-  initialCards,
   validationConfig,
   newCardAddButton,
   editProfileButton,
+  editAvatarButton,
   userData,
 } from "../utils/constants.js";
 
@@ -32,55 +32,44 @@ popupWithImage.setEventListeners();
 
 //функция создания новой карточки
 const renderInstanceCard = (item) => {
-  fetch("https://mesto.nomoreparties.co/v1/cohort-65/cards", {
-    method: "POST",
-    headers: {
-      authorization: "dc1cd803-f1c8-46ed-844f-d9d2bd71a19f",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      name: item.place,
-      link: item.link,
-    }),
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.status);
-    })
-    .then((res) => {
-      console.log(res);
-      const item = {};
-      item.place = res.name;
-      item.link = res.link;
-      const instanceCard = new Card(item, "#cardTemplate", () => {
-        popupWithImage.open(item);
-      });
-      console.log(instanceCard.generateCard());
-      return instanceCard.generateCard();
-    });
+  const instanceCard = new Card(item, "#cardTemplate", () => {
+    popupWithImage.open(item);
+  });
+  return instanceCard.generateCard();
 };
 
 //инстанс секции с карточками
-const cardList = new Section(
-  {
-    items: {},
-    renderer: renderInstanceCard,
-  },
-  ".cards__list"
-);
+const cardList = new Section(renderInstanceCard, ".cards__list");
 
 //отрисовка дефолтныйх карточек
-//cardList.renderItems();
+api.getInitialCards().then((cardsArray) => {
+  cardList.renderItems(cardsArray);
+});
 
 //инстанс попапа добавления карточки
 const addCardPopup = new PopupWithForm(".popup_aim_cards", (item) => {
-  console.log(renderInstanceCard(item));
-  cardList.addItem(renderInstanceCard(item));
+  api.postNewCard(item).then((res) => {
+    cardList.addItem(renderInstanceCard(res));
+  });
 });
 
-//установка слушателей на попап добавления карточек
+//инстанс попапа редактирования профиля
+const editProfilePopup = new PopupWithForm(".popup_aim_profile", (data) => {
+  api.patchProfileData(data).then((res) => {
+    profileInfo.setUserInfo(res);
+  });
+});
+
+//инстанс попапа изменения аватара
+const editAvatarPopup = new PopupWithForm(".popup_aim_avatar", (data) => {
+  api.patchAvatar(data).then((res) => {
+    profileInfo.setUserInfo(res);
+  });
+});
+
+//установка слушателей на попапы
+editAvatarPopup.setEventListeners();
+editProfilePopup.setEventListeners();
 addCardPopup.setEventListeners();
 
 //уиверсальный объект инстансов валидации
@@ -109,15 +98,6 @@ newCardAddButton.addEventListener("click", () => {
 //инстанс информации профиля
 const profileInfo = new UserInfo(userData);
 
-//инстанс попапа редактирования профиля
-const editProfilePopup = new PopupWithForm(".popup_aim_profile", (data) => {
-  api.patchProfileData(data).then((res) => {
-    profileInfo.setUserInfo(res);
-  });
-});
-
-editProfilePopup.setEventListeners();
-
 //открытие попапа редактирования профиля
 editProfileButton.addEventListener("click", () => {
   formValidators.profile.toggleSubmitButton();
@@ -126,7 +106,13 @@ editProfileButton.addEventListener("click", () => {
   editProfilePopup.open();
 });
 
-//установка данных с сервера
+//установка данных пользователя с сервера
 api.getProfileData().then((result) => {
   profileInfo.setUserInfo(result);
+});
+
+editAvatarButton.addEventListener("click", () => {
+  formValidators.avatar.toggleSubmitButton();
+  formValidators.avatar.clearInputErrors();
+  editAvatarPopup.open();
 });
