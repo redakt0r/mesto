@@ -8,6 +8,15 @@ const validationConfig = {
   inputHighlightedClass: "popup__input_highlighted",
 };
 
+//настройки для api
+const apiConfig = {
+  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-65",
+  headers: {
+    authorization: "dc1cd803-f1c8-46ed-844f-d9d2bd71a19f",
+    "Content-Type": "application/json",
+  },
+};
+
 //кнопка добавления новой карточки
 const newCardAddButton = document.querySelector(".profile__card-button");
 
@@ -32,4 +41,5 @@ export {
   editProfileButton,
   userData,
   editAvatarButton,
+  apiConfig,
 };

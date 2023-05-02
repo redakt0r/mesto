@@ -1,8 +1,24 @@
 export default class Card {
-  constructor({ name, link, likes }, templateSelector, openPopupFunction) {
+  constructor(
+    {
+      name,
+      link,
+      likes,
+      currentUserId,
+      owner,
+      _id,
+      openPopupFunction,
+      handleCardLikeButtonClick,
+      handleDeleteButtonClick,
+    },
+    templateSelector
+  ) {
     this._place = name;
     this._link = link;
     this._likes = likes.length;
+    this._userId = currentUserId;
+    this._ownerId = owner._id;
+    this._cardId = _id;
     this._templateSelector = templateSelector;
     this._openPopupFunction = openPopupFunction;
   }
@@ -26,9 +42,11 @@ export default class Card {
     this._cardLikeButton.addEventListener("click", () => {
       this._handleCardLikeButtonClick();
     });
-    this._deleteCardButton.addEventListener("click", () => {
-      this._handleDeleteButtonClick();
-    });
+    if (this._deleteCardButton) {
+      this._deleteCardButton.addEventListener("click", () => {
+        this._handleDeleteButtonClick();
+      });
+    }
     this._image.addEventListener("click", () => {
       this._openPopupFunction(this._link, this._place);
     });
@@ -40,15 +58,18 @@ export default class Card {
     this._image.src = this._link;
     this._image.alt = this._place;
     this._title = this._element.querySelector(".card__title");
+    this._title.textContent = this._place;
     this._likesQuantity = this._element.querySelector(".card__like-counter");
     if (this._likes > 0) {
       this._likesQuantity.textContent = this._likes;
     } else this._likesQuantity.textContent = "";
-    this._title.textContent = this._place;
     this._cardLikeButton = this._element.querySelector(".card__like-button");
     this._deleteCardButton = this._element.querySelector(
       ".card__remove-button"
     );
+    if (this._ownerId !== this._userId) {
+      this._deleteCardButton.remove();
+    }
     this._setEventListeners();
     return this._element;
   }

@@ -1,24 +1,20 @@
 export default class Api {
-  constructor(baseUrl, token) {
+  constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
-    this._token = token;
+    this._headers = headers;
   }
 
   //получение дефолтных карточек с сервера
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
-      headers: {
-        authorization: this._token,
-      },
+      headers: this._headers,
     }).then((res) => res.json());
   }
 
   //получение данных профиля с сервера
   getProfileData() {
     return fetch(`${this._baseUrl}/users/me`, {
-      headers: {
-        authorization: this._token,
-      },
+      headers: this._headers,
     }).then((res) => res.json());
   }
 
@@ -26,10 +22,7 @@ export default class Api {
   patchProfileData({ name, about }) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
-      headers: {
-        authorization: this._token,
-        "Content-Type": "application/json",
-      },
+      headers: this._headers,
       body: JSON.stringify({
         name: name,
         about: about,
@@ -41,10 +34,7 @@ export default class Api {
   patchAvatar({ avatar }) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
-      headers: {
-        authorization: this._token,
-        "Content-Type": "application/json",
-      },
+      headers: this._headers,
       body: JSON.stringify({
         avatar: avatar,
       }),
@@ -55,10 +45,7 @@ export default class Api {
   postNewCard({ place, link }) {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
-      headers: {
-        authorization: this._token,
-        "Content-Type": "application/json",
-      },
+      headers: this._headers,
       body: JSON.stringify({
         name: place,
         link: link,
