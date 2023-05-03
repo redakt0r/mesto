@@ -52,4 +52,28 @@ export default class Api {
       }),
     }).then((res) => res.json());
   }
+
+  //установка лайка
+  putLike(item) {
+    return fetch(`${this._baseUrl}/cards/${item._id}/likes`, {
+      method: "PUT",
+      headers: this._headers,
+    }).then((res) => res.json());
+  }
+
+  //снятие лайка
+  deleteLike(item) {
+    return fetch(`${this._baseUrl}/cards/${item._id}/likes`, {
+      method: "DELETE",
+      headers: this._headers,
+    }).then((res) => res.json());
+  }
+
+  //удаление карточки
+  deleteCard(item) {
+    return fetch(`${this._baseUrl}/cards/${item._id}`, {
+      method: "DELETE",
+      headers: this._headers,
+    }).then((res) => res.json());
+  }
 }

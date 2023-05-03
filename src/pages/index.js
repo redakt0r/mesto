@@ -27,6 +27,11 @@ const api = new Api(apiConfig);
 //инстанс информации профиля
 const profileInfo = new UserInfo(userData);
 
+//инстанс попапа сабмита
+const popupWithsubmit = new PopupWithSubmit(".popup_aim_submit");
+
+popupWithsubmit.setEventListeners();
+
 //инстанс попапа полноразмерной картинки
 const popupWithImage = new PopupWithImage(".popup_aim_picture");
 
@@ -39,8 +44,21 @@ const renderInstanceCard = (item) => {
     popupWithImage.open(item);
   };
   item.currentUserId = profileInfo.getUserInfo().userId;
-  item.handleCardLikeButtonClick = () => {};
-  item.handleDeleteButtonClick = () => {};
+  item.handleCardLikeButtonClick = function () {
+    if (this._likes.find((item) => item._id == this._userId)) {
+      api.deleteLike(item).then(function () {
+        this._likesQuantity.textContent = this._likes.length;
+      });
+    } else api.putLike(item);
+  };
+  item.handleDeleteButtonClick = (card) => {
+    popupWithsubmit.open(() => {
+      api.deleteCard(item).then(() => {
+        card.deleteElementOnFront();
+        popupWithsubmit.close();
+      });
+    });
+  };
   console.log(item);
   const instanceCard = new Card(item, "#cardTemplate");
   return instanceCard.generateCard();
