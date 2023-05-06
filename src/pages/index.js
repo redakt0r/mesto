@@ -44,33 +44,31 @@ const renderInstanceCard = (item) => {
     popupWithImage.open(item);
   };
   item.currentUserId = profileInfo.getUserInfo().userId;
-  item.handleCardLikeButtonClick = function () {
-    if (this._likes.find((item) => item._id == this._userId)) {
-      api.deleteLike(item).then(function () {
-        this._likesQuantity.textContent = this._likes.length;
+  item.handleCardLikeButtonClick = function (card) {
+    if (card._likes.find((item) => item._id == card._userId)) {
+      api.deleteLike(item).then((res) => {
+        console.log(res);
+        card.toggleLikes(res.likes);
       });
-    } else api.putLike(item);
+    } else
+      api.putLike(item).then((res) => {
+        card.toggleLikes(res.likes);
+      });
   };
   item.handleDeleteButtonClick = (card) => {
     popupWithsubmit.open(() => {
       api.deleteCard(item).then(() => {
-        card.deleteElementOnFront();
+        card.deleteCardOnFront();
         popupWithsubmit.close();
       });
     });
   };
-  console.log(item);
   const instanceCard = new Card(item, "#cardTemplate");
   return instanceCard.generateCard();
 };
 
 //инстанс секции с карточками
 const cardList = new Section(renderInstanceCard, ".cards__list");
-
-//отрисовка дефолтныйх карточек
-api.getInitialCards().then((cardsArray) => {
-  cardList.renderItems(cardsArray);
-});
 
 //инстанс попапа добавления карточки
 const addCardPopup = new PopupWithForm(".popup_aim_cards", (data) => {
@@ -130,9 +128,13 @@ editProfileButton.addEventListener("click", () => {
 });
 
 //установка данных пользователя с сервера
-api.getProfileData().then((result) => {
-  profileInfo.setUserInfo(result);
-});
+//отрисовка дефолтныйх карточек
+Promise.all([api.getProfileData(), api.getInitialCards()]).then(
+  ([userData, cardsArray]) => {
+    profileInfo.setUserInfo(userData);
+    cardList.renderItems(cardsArray);
+  }
+);
 
 editAvatarButton.addEventListener("click", () => {
   formValidators.avatar.toggleSubmitButton();
