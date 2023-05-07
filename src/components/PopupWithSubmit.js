@@ -15,6 +15,7 @@ export default class PopupWithSubmit extends Popup {
     super.setEventListeners();
   }
 
+  //переопределение метода открытия, добавление функции сабмита
   open(submitFormFunction) {
     super.open();
     this._submitFormFunction = submitFormFunction;
