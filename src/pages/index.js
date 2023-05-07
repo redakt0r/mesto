@@ -34,9 +34,13 @@ const editProfilePopup = new PopupWithForm(".popup_aim_profile", (data) => {
     .catch((err) => {
       console.log(err);
     })
-    .finally(() => {
+    .then(() => {
       editProfilePopup.close();
-      editProfilePopup.renderLoading(false);
+    })
+    .finally(() => {
+      setTimeout(() => {
+        editProfilePopup.renderLoading(false);
+      }, 400);
     });
 });
 
@@ -50,9 +54,13 @@ const editAvatarPopup = new PopupWithForm(".popup_aim_avatar", (data) => {
     .catch((err) => {
       console.log(err);
     })
-    .finally(() => {
+    .then(() => {
       editAvatarPopup.close();
-      editAvatarPopup.renderLoading(false);
+    })
+    .finally(() => {
+      setTimeout(() => {
+        editAvatarPopup.renderLoading(false);
+      }, 400);
     });
 });
 
@@ -130,9 +138,13 @@ const addCardPopup = new PopupWithForm(".popup_aim_cards", (data) => {
     .catch((err) => {
       console.log(err);
     })
-    .finally(() => {
+    .then(() => {
       addCardPopup.close();
-      addCardPopup.renderLoading(false);
+    })
+    .finally(() => {
+      setTimeout(() => {
+        addCardPopup.renderLoading(false);
+      }, 400);
     });
 });
 
