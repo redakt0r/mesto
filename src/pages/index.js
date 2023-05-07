@@ -35,8 +35,8 @@ const editProfilePopup = new PopupWithForm(".popup_aim_profile", (data) => {
       console.log(err);
     })
     .finally(() => {
-      editProfilePopup.renderLoading(false);
       editProfilePopup.close();
+      editProfilePopup.renderLoading(false);
     });
 });
 
@@ -51,8 +51,8 @@ const editAvatarPopup = new PopupWithForm(".popup_aim_avatar", (data) => {
       console.log(err);
     })
     .finally(() => {
-      editAvatarPopup.renderLoading(false);
       editAvatarPopup.close();
+      editAvatarPopup.renderLoading(false);
     });
 });
 
@@ -131,8 +131,8 @@ const addCardPopup = new PopupWithForm(".popup_aim_cards", (data) => {
       console.log(err);
     })
     .finally(() => {
-      addCardPopup.renderLoading(false);
       addCardPopup.close();
+      addCardPopup.renderLoading(false);
     });
 });
 
