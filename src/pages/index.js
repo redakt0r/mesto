@@ -15,7 +15,7 @@ import FormValidator from "../components/FormValidator.js";
 import PopupWithImage from "../components/PopupWithImage";
 import PopupWithForm from "../components/PopupWithForm";
 import UserInfo from "../components/UserInfo";
-import Api from "../components/Api";
+import Api from "../components/API";
 import PopupWithSubmit from "../components/PopupWithSubmit";
 
 //инстансы
