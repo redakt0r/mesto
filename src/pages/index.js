@@ -15,7 +15,7 @@ import FormValidator from "../components/FormValidator.js";
 import PopupWithImage from "../components/PopupWithImage";
 import PopupWithForm from "../components/PopupWithForm";
 import UserInfo from "../components/UserInfo";
-import Api from "../components/API";
+import Api from "../components/Api";
 import PopupWithSubmit from "../components/PopupWithSubmit";
 
 //инстансы
@@ -31,16 +31,15 @@ const editProfilePopup = new PopupWithForm(".popup_aim_profile", (data) => {
     .then((res) => {
       profileInfo.setUserInfo(res);
     })
-    .catch((err) => {
-      console.log(err);
-    })
     .then(() => {
       editProfilePopup.close();
     })
     .finally(() => {
-      setTimeout(() => {
-        editProfilePopup.renderLoading(false);
-      }, 400);
+      editProfilePopup.renderLoading(false);
+    })
+    .catch((err) => {
+      console.log(err);
+      alert(err);
     });
 });
 
@@ -51,16 +50,15 @@ const editAvatarPopup = new PopupWithForm(".popup_aim_avatar", (data) => {
     .then((res) => {
       profileInfo.setUserInfo(res);
     })
-    .catch((err) => {
-      console.log(err);
-    })
     .then(() => {
       editAvatarPopup.close();
     })
     .finally(() => {
-      setTimeout(() => {
-        editAvatarPopup.renderLoading(false);
-      }, 400);
+      editAvatarPopup.renderLoading(false);
+    })
+    .catch((err) => {
+      console.log(err);
+      alert(err);
     });
 });
 
@@ -96,6 +94,7 @@ const renderInstanceCard = (item) => {
         })
         .catch((err) => {
           console.log(err);
+          alert(err);
         });
     } else
       api
@@ -105,6 +104,7 @@ const renderInstanceCard = (item) => {
         })
         .catch((err) => {
           console.log(err);
+          alert(err);
         });
   };
   item.handleDeleteButtonClick = (card) => {
@@ -117,6 +117,7 @@ const renderInstanceCard = (item) => {
         })
         .catch((err) => {
           console.log(err);
+          alert(err);
         });
     });
   };
@@ -135,16 +136,17 @@ const addCardPopup = new PopupWithForm(".popup_aim_cards", (data) => {
     .then((res) => {
       cardList.addItem(renderInstanceCard(res));
     })
-    .catch((err) => {
-      console.log(err);
-    })
     .then(() => {
       addCardPopup.close();
     })
     .finally(() => {
       setTimeout(() => {
-        addCardPopup.renderLoading(false);
+        addCardPopup.renderLoading(false); //не для "искусственной задержки", а чтобы спрятать "мерцание" надписи на кнопке сабмита, видимое из-за плавного закрытия попапа
       }, 400);
+    })
+    .catch((err) => {
+      console.log(err);
+      alert(err);
     });
 });
 
