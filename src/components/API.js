@@ -4,7 +4,7 @@ export default class Api {
     this._headers = headers;
   }
 
-  //проверка ответа
+  //проверка ответа.
   _checkResponse(res) {
     if (!res.ok) {
       return Promise.reject(`Ошибочка: ${res.status}`);
