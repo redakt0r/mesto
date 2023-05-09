@@ -86,7 +86,7 @@ const renderInstanceCard = (item) => {
   };
   item.currentUserId = profileInfo.getUserInfo().userId;
   item.handleCardLikeButtonClick = (card) => {
-    if (card._likes.find((item) => item._id == card._userId)) {
+    if (card.isLiked()) {
       api
         .deleteLike(item)
         .then((res) => {
