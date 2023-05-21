@@ -32,6 +32,9 @@
 @import url(../blocks/card/__remove-button/card__remove-button.css);
 @import url(../blocks/card/__like-wrapper/card__like-wrapper.css);
 @import url(../blocks/card/__like-counter/card__like-counter.css);
+@import url(../blocks/card/__like-counter/_hidden/card__like-counter_hidden.css);
+@import url(../blocks/card/__users-whoLiked/card__users-whoLiked.css);
+@import url(../blocks/card/__user-avatar/card__user-avatar.css);
 
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);

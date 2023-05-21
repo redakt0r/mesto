@@ -27,7 +27,7 @@ export default class Card {
     this._templateSelector = templateSelector;
   }
 
-  _getTemplate() {
+  _getCardTemplate() {
     const cardElement = document
       .querySelector(this._templateSelector)
       .content.firstElementChild.cloneNode(true);
@@ -44,12 +44,29 @@ export default class Card {
 
   toggleLikes(likes) {
     this._likesQuantity.textContent = likes.length;
+    if (likes.length === 0) {
+      this._likesQuantity.classList.add("card__like-counter_hidden");
+    } else this._likesQuantity.classList.remove("card__like-counter_hidden");
     this._likes = likes;
     if (this.isLiked()) {
       this._cardLikeButton.classList.add("card__like-button_active");
     } else {
       this._cardLikeButton.classList.remove("card__like-button_active");
     }
+
+    this._avatarContainer = this._element.querySelector(
+      ".card__users-whoLiked"
+    );
+    this._avatarContainer.replaceChildren();
+
+    likes.forEach((like) => {
+      let avatar = document.createElement("img");
+      avatar.src = like.avatar;
+      avatar.classList.add("card__user-avatar");
+      this._avatarContainer.append(avatar);
+      console.log(this._avatarContainer);
+      return this._avatarContainer;
+    });
   }
 
   _setEventListeners() {
@@ -67,7 +84,7 @@ export default class Card {
   }
 
   generateCard() {
-    this._element = this._getTemplate();
+    this._element = this._getCardTemplate();
     this._image = this._element.querySelector(".card__image");
     this._image.src = this._link;
     this._image.alt = this._place;

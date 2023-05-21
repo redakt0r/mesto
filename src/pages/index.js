@@ -15,7 +15,7 @@ import FormValidator from "../components/FormValidator.js";
 import PopupWithImage from "../components/PopupWithImage";
 import PopupWithForm from "../components/PopupWithForm";
 import UserInfo from "../components/UserInfo";
-import Api from "../components/API";
+import Api from "../components/Api.js";
 import PopupWithSubmit from "../components/PopupWithSubmit";
 
 //инстансы
@@ -34,9 +34,9 @@ const editProfilePopup = new PopupWithForm(".popup_aim_profile", (data) => {
     .then(() => {
       editProfilePopup.close();
     })
-    .finally(() => {
+    /* .finally(() => {
       editProfilePopup.renderLoading(false);
-    })
+    }) */
     .catch((err) => {
       console.log(err);
       alert(err);
@@ -180,6 +180,7 @@ newCardAddButton.addEventListener("click", () => {
 editProfileButton.addEventListener("click", () => {
   formValidators.profile.toggleSubmitButton();
   formValidators.profile.clearInputErrors();
+  editProfilePopup.renderLoading(false);
   editProfilePopup.setInputValues(profileInfo.getUserInfo());
   editProfilePopup.open();
 });

@@ -10,7 +10,7 @@ module.exports = {
     filename: "main.js",
     publicPath: "",
   },
-  devtool: "eval", // для карты
+  devtool: "source-map", // для карты
   mode: "development",
   devServer: {
     static: path.resolve(__dirname, "dist"),

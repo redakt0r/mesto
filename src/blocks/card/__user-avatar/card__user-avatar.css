@@ -1,0 +1,8 @@
+.card__user-avatar {
+  display: block;
+  border-radius: 50%;
+  max-width: 30px;
+  object-fit: cover;
+  aspect-ratio: 1/1;
+  margin: 2px;
+}

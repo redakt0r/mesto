@@ -1,0 +1,12 @@
+.card__users-whoLiked {
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: -1px 5px 24px 2px rgba(34, 60, 80, 0.47);
+  display: none;
+  grid-template-columns: repeat(4, 1fr);
+  inset: auto auto auto auto;
+  max-width: 166px;
+  position: absolute;
+  transform: translate(0px, 45px);
+  z-index: 1;
+}
